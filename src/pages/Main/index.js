@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
-import { Container, Form, SubmitButton } from './styles';
+import Container from '../../components/Container';
+
+import { Form, SubmitButton, List } from './styles';
 
 // We can do it using this wat, OR
 // eslint-disable-next-line react/prefer-stateless-function
@@ -14,6 +17,22 @@ class Main extends Component {
     repositories: [],
   };
 
+  componentDidMount() {
+    const repositories = localStorage.getItem('repositories');
+
+    if (repositories) {
+      this.setState({ repositories: JSON.parse(repositories) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { repositories } = this.state;
+
+    if (prevState.repositories !== repositories) {
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    }
+  }
+
   handleInputChange = (e) => {
     this.setState({ newRepo: e.target.value });
   };
@@ -23,7 +42,7 @@ class Main extends Component {
 
     this.setState({ loading: true });
     const { newRepo, repositories } = this.state;
-    const response = await api.get(`/repos/wilson-boca/${newRepo}`);
+    const response = await api.get(`/repos/${newRepo}`);
 
     const data = {
       name: response.data.full_name,
@@ -37,7 +56,7 @@ class Main extends Component {
   };
 
   render() {
-    const { newRepo, loading } = this.state;
+    const { newRepo, loading, repositories } = this.state;
     return (
       <Container>
         <h1>
@@ -60,6 +79,16 @@ class Main extends Component {
             )}
           </SubmitButton>
         </Form>
+        <List>
+          {repositories.map((repository) => (
+            <li key={repository.name}>
+              <span>{repository.name}</span>
+              <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
+                Details
+              </Link>
+            </li>
+          ))}
+        </List>
       </Container>
     );
   }
