@@ -15,7 +15,6 @@ export const Title = styled.h1`
 const rotate = keyframes`
   from {
     transform: rotate(0deg);
-
   }
   to {
     transform: rotate(360deg);
@@ -35,6 +34,7 @@ export const Form = styled.form`
     font-size: 16px;
   }
 `;
+
 export const SubmitButton = styled.button.attrs((props) => ({
   type: 'submit',
   disabled: props.loading,
@@ -44,21 +44,18 @@ export const SubmitButton = styled.button.attrs((props) => ({
   padding: 0 15px;
   margin-left: 10px;
   border-radius: 4px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.6;
   }
-
   ${(props) =>
     props.loading &&
     css`
-      svg: {
-        animation: ${rotate} 2s linear Infinity;
+      svg {
+        animation: ${rotate} 2s linear infinite;
       }
     `}
 `;
