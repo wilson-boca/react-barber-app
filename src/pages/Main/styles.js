@@ -1,15 +1,15 @@
 import styled, { keyframes, css } from 'styled-components';
 
 export const Title = styled.h1`
-  color: #FFF;
-  /* font-size: 24px;
+  color: #fff;
+  font-size: 24px;
   color: ${(props) => (props.error ? 'red' : '#7159FFFc1')};
   font-family: Arial, Helvetica, sans-serif;
 
   small {
     font-size: 14px;
     color: #333;
-  } */
+  }
 `;
 
 const rotate = keyframes`
@@ -37,7 +37,7 @@ export const Form = styled.form`
 `;
 export const SubmitButton = styled.button.attrs((props) => ({
   type: 'submit',
-  // disabled: props.loading.toString(),
+  disabled: props.loading.toString(),
 }))`
   background: #7159c1;
   border: 0;
@@ -82,4 +82,5 @@ export const List = styled.ul`
       color: #7159c1;
       text-decoration: none;
     }
+  }
 `;
